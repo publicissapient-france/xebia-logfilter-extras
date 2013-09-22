@@ -14,9 +14,21 @@
 <!--  limitations under the License.                                           -->
 <!--                                                                           -->
 
-# Declare the AuditLoggerFilter
+# xebia-logfilter-extras
 
-AuditLoggerFilter is a ServletFilter that Dump full request and response to an SLF4J logger.
+This project provide a ServletFilter that can dump request and response to the SLF4J API implementation in use.
+When the logger has a DEBUG level, it will wrap request/response and intercept data from the body.
+If level is higher than DEBUG, the filter will simply call the filter chain without doing anything.
+
+Dumping can be enabled separately for request and response. To provide easy coupling between request and response
+the filter will generate an Integer base ID when processing.
+
+It is possible to limit the size of the dump using th maxDumpSizeInKB init parameter. This parameter
+defines the max size of the dump in KB, beware that it defaults to 500KB.
+
+# Using the RequestLoggerFilter
+
+RequestLoggerFilter is a ServletFilter that Dump full request and response to an SLF4J logger.
 
 * RequestLoggerFilter.request  - Dumps the request if debug is enabled
 * RequestLoggerFilter.response - Dumps the response if debug is enabled
@@ -26,14 +38,18 @@ AuditLoggerFilter is a ServletFilter that Dump full request and response to an S
 
 ```
   <filter>
-    <filter-name>auditLoggerFilter</filter-name>
+    <filter-name>requestLoggerFilter</filter-name>
     <filter-class>fr.xebia.extras.filters.logfilters.RequestLoggerFilter</filter-class>
+    <init-param>
+        <param-name>maxDumpSizeInKB</param-name>
+        <param-value>500</param-value>
+      </init-param>
   </filter>
   
   <!-- ... -->
     
   <filter-mapping>
-      <filter-name>auditLoggerFilter</filter-name>
+      <filter-name>requestLoggerFilter</filter-name>
       <url-pattern>/rest/*</url-pattern>
   </filter-mapping>
 ```
@@ -54,3 +70,7 @@ AuditLoggerFilter is a ServletFilter that Dump full request and response to an S
         <appender-ref ref="console"/>
     </logger>
 ```
+
+## Maven depedency
+
+*TODO*

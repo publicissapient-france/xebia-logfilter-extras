@@ -27,12 +27,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
-* Created with IntelliJ IDEA.
-* User: slemesle
-* Date: 20/09/13
-* Time: 10:33
-* To change this template use File | Settings | File Templates.
-*/
+ * This class is used by the RequestLoggerFilter to dump request body into a byte buffer.
+ * The byte buffer is then used to build a ServletInputStream for the HttpServletRequest it wraps.
+ */
 class HttpServletRequestLoggingWrapper extends HttpServletRequestWrapper {
 
     private static final Logger logger = LoggerFactory.getLogger(HttpServletRequestLoggingWrapper.class);

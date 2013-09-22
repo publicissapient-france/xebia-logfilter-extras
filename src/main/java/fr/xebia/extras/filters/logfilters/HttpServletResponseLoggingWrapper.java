@@ -29,12 +29,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* Created with IntelliJ IDEA.
-* User: slemesle
-* Date: 20/09/13
-* Time: 10:33
-* To change this template use File | Settings | File Templates.
-*/
+ * This class is used by the RequestLoggerFilter to wrap the HttpServletResponse.
+ * It is in charge of intercepting headers added to the response and data written to the ServletOutputStream
+ * or PrintWriter.
+ */
 class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
 
 
