@@ -14,6 +14,8 @@
 <!--  limitations under the License.                                           -->
 <!--                                                                           -->
 
+[![Build Status](https://buildhive.cloudbees.com/job/xebia-france/job/xebia-logfilter-extras/badge/icon)](https://buildhive.cloudbees.com/job/xebia-france/job/xebia-logfilter-extras/)
+
 # xebia-logfilter-extras
 
 This project provide a ServletFilter that can dump request and response to the SLF4J API implementation in use.
