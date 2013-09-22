@@ -14,18 +14,17 @@
 <!--  limitations under the License.                                           -->
 <!--                                                                           -->
 
-h1. Declare the AuditLoggerFilter
+# Declare the AuditLoggerFilter
 
 AuditLoggerFilter is a ServletFilter that Dump full request and response to an SLF4J logger.
-
 
 * RequestLoggerFilter.request  - Dumps the request if debug is enabled
 * RequestLoggerFilter.response - Dumps the response if debug is enabled
 * RequestLoggerFilter.headers  - Add Http Headers to request and response logs if debug is enabled
 
-h2. Mapping sample
+## Mapping sample
 
-{code}
+``
   <filter>
     <filter-name>auditLoggerFilter</filter-name>
     <filter-class>fr.xebia.extras.filters.logfilters.RequestLoggerFilter</filter-class>
@@ -37,11 +36,11 @@ h2. Mapping sample
       <filter-name>auditLoggerFilter</filter-name>
       <url-pattern>/rest/*</url-pattern>
   </filter-mapping>
-{code}
+````
 
-h2. logback configuration
+## logback configuration
 
-{code}
+ ```
  <!--Dumping HTTP Requests and response using the RequestLoggerFilter -->
     <logger name="RequestLoggerFilter.request" level="debug" additivity="false">
         <appender-ref ref="console"/>
@@ -54,5 +53,4 @@ h2. logback configuration
     <logger name="RequestLoggerFilter.headers" level="info" additivity="false">
         <appender-ref ref="console"/>
     </logger>
-{code}
-
+``
