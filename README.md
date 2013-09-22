@@ -24,7 +24,7 @@ AuditLoggerFilter is a ServletFilter that Dump full request and response to an S
 
 ## Mapping sample
 
-``
+```
   <filter>
     <filter-name>auditLoggerFilter</filter-name>
     <filter-class>fr.xebia.extras.filters.logfilters.RequestLoggerFilter</filter-class>
@@ -36,7 +36,7 @@ AuditLoggerFilter is a ServletFilter that Dump full request and response to an S
       <filter-name>auditLoggerFilter</filter-name>
       <url-pattern>/rest/*</url-pattern>
   </filter-mapping>
-````
+```
 
 ## logback configuration
 
@@ -53,4 +53,4 @@ AuditLoggerFilter is a ServletFilter that Dump full request and response to an S
     <logger name="RequestLoggerFilter.headers" level="info" additivity="false">
         <appender-ref ref="console"/>
     </logger>
-``
+```
