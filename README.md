@@ -75,4 +75,13 @@ RequestLoggerFilter is a ServletFilter that Dump full request and response to an
 
 ## Maven depedency
 
-*TODO*
+This project is available via maven repository
+
+```
+<dependency>
+  <groupId>fr.xebia.extras</groupId>
+  <artifactId>xebia-logfilter-extras</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
