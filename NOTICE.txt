@@ -1,9 +1,5 @@
 
-This product includes/uses software, Apache Geronimo Specs  (http://geronimo.apache.org/),
-developed by The Apache Software Foundation  (http://www.apache.org)
-License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-This product includes/uses software, Logback  (http://logback.qos.ch/),
+This product uses software, Logback  (http://logback.qos.ch/),
 developed by QOS.ch (http://www.qos.ch/)
 License: Eclipse Public License v1.0 (http://www.eclipse.org/legal/epl-v10.html)
          or (per the licensee's choosing)
@@ -16,6 +12,6 @@ License: MIT License (http://www.slf4j.org/license.html)
 JUnit (http://junit.org)
 developped by Harmcrest (www.hamcrest.org)
 
-This product includes/uses, Mockito (https://code.google.com/p/mockito/),
+This product uses, Mockito (https://code.google.com/p/mockito/),
 developped by Szczepan Faber and friends.
 License: MIT License (https://github.com/mockito/mockito/blob/master/LICENSE)
