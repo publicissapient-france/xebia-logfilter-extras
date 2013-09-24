@@ -48,7 +48,7 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
         return headers;
     }
 
-    HttpServletResponseLoggingWrapper(final HttpServletResponse response, final int _maxDumpSizeInKB ) {
+    HttpServletResponseLoggingWrapper(final HttpServletResponse response, final int _maxDumpSizeInKB) {
         super(response);
         this.response = response;
         maxDumpSizeInB = _maxDumpSizeInKB * 1000;
@@ -65,12 +65,13 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
     /**
      * Convenience method to get a header value list, initialize it and put it in the headers map
      * if it does not exist
-     * @param name      header name
-     * @return          list containing values for this header
+     *
+     * @param name header name
+     * @return list containing values for this header
      */
     private List<String> getHeaderValues(String name) {
         List<String> values = headers.get(name);
-        if (values == null){
+        if (values == null) {
             values = new ArrayList<>();
             headers.put(name, values);
         }
@@ -86,9 +87,9 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
 
     @Override
     public void flushBuffer() throws IOException {
-        if (writer != null){
+        if (writer != null) {
             writer.flush();
-        } else if (cache != null){
+        } else if (cache != null) {
             cache.flush();
         }
         super.flushBuffer();
@@ -116,7 +117,7 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
 
         cache = new CacheResponseStream(response.getOutputStream());
         String encoding = null;
-        if (response.getCharacterEncoding() != null && Charset.isSupported(response.getCharacterEncoding())){
+        if (response.getCharacterEncoding() != null && Charset.isSupported(response.getCharacterEncoding())) {
             encoding = response.getCharacterEncoding();
         } else {
             encoding = ISO_8859_1;
@@ -127,9 +128,9 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
 
     public String getContentAsInputString() {
         String body = null;
-        if (cache != null ){
-            final byte [] bytes = cache.toByteArray();
-            if(bytes.length > maxDumpSizeInB){
+        if (cache != null) {
+            final byte[] bytes = cache.toByteArray();
+            if (bytes.length > maxDumpSizeInB) {
                 body = new StringBuilder(new String(bytes, 0, maxDumpSizeInB))
                         .append("\n-- ").append(bytes.length - maxDumpSizeInB)
                         .append(" more bytes skipped from dump by max dump size limit").toString();
@@ -173,7 +174,7 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
     @Override
     public void setStatus(final int sc) {
         super.setStatus(sc);
-        status = sc +"";
+        status = sc + "";
     }
 
     @Override
@@ -183,7 +184,7 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
     }
 
 
-   private class CacheResponseStream extends ServletOutputStream {
+    private class CacheResponseStream extends ServletOutputStream {
         protected final ServletOutputStream outputStream;
         protected final ByteArrayOutputStream cache;
 

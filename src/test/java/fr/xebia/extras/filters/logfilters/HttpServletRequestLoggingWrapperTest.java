@@ -84,8 +84,8 @@ public class HttpServletRequestLoggingWrapperTest {
         Assert.assertEquals("Wrapper should give complete stream", HUGE_PAYLOAD, new String(bytes, 0, ln));
     }
 
-    ServletInputStream getStreamForString(String payloadString){
-        final ByteArrayInputStream payload = new ByteArrayInputStream(payloadString != null ? payloadString.getBytes(): new byte[0]);
+    ServletInputStream getStreamForString(String payloadString) {
+        final ByteArrayInputStream payload = new ByteArrayInputStream(payloadString != null ? payloadString.getBytes() : new byte[0]);
 
         return new ServletInputStream() {
             @Override

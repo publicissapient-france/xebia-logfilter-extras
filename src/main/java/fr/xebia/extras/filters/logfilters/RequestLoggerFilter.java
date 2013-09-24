@@ -15,35 +15,31 @@
  */
 package fr.xebia.extras.filters.logfilters;
 
-import java.io.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Filter in charge of dumping requests and responses coming to webapp.
- *
+ * <p/>
  * This class defines 3 loggers for dumping requests :
- *      *   RequestLoggerFilter.headers  - higher than debug level, logs headers for request and response if request and/or response are to be dumped
- *      *   RequestLoggerFilter.request  - higher than debug level, logs the complete request
- *      *   RequestLoggerFilter.response - higher than debug level, logs the complete body of the response
- *
+ * *   RequestLoggerFilter.headers  - higher than debug level, logs headers for request and response if request and/or response are to be dumped
+ * *   RequestLoggerFilter.request  - higher than debug level, logs the complete request
+ * *   RequestLoggerFilter.response - higher than debug level, logs the complete body of the response
+ * <p/>
  * This filter does nothing if there is no dumping configured by log level.
- *
+ * <p/>
  * The Filter defines a maxDumpSizeInKB that allows to define a limit to the size of the payload or body it will dump in logs. This parameter is defined in KB
  * and defaults to 500 KB.
  */
@@ -69,18 +65,19 @@ public class RequestLoggerFilter implements Filter {
      * Loads the maxDumpSizeInKB init parameter of the filter as defined in web.xml
      * maxDumpSizeInKB default value is 500 Ko. If parameter has a bad configuration (non positive integer or non integer String),
      * default value will be used.
-     * @param filterConfig          configuration object loaded for this filter
-     * @throws ServletException     Never throw this exception but it is needed by Servlet API
+     *
+     * @param filterConfig configuration object loaded for this filter
+     * @throws ServletException Never throw this exception but it is needed by Servlet API
      */
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
         // Nothing to do on init.
         String maxDumpSizeStr = null;
-        if (( maxDumpSizeStr = filterConfig.getInitParameter("maxDumpSizeInKB") )!= null) {
+        if ((maxDumpSizeStr = filterConfig.getInitParameter("maxDumpSizeInKB")) != null) {
 
             try {
                 int tempDumpSize = new Integer(maxDumpSizeStr).intValue();
-                if (tempDumpSize > 0){
+                if (tempDumpSize > 0) {
                     maxDumpSizeInKB = tempDumpSize;
                 } else {
                     logger.warn("Bad format for maxDumpSizeInKB parameter expecting positive Integer value:{}", tempDumpSize);
@@ -136,8 +133,9 @@ public class RequestLoggerFilter implements Filter {
 
     /**
      * This method handles the dumping of the reponse body, status code and headers if needed
-     * @param response      ResponseWrapper that handled the response populated by the webapp
-     * @param id            Generated unique identifier for the request/response couple
+     *
+     * @param response ResponseWrapper that handled the response populated by the webapp
+     * @param id       Generated unique identifier for the request/response couple
      */
     private void dumpResponse(final HttpServletResponseLoggingWrapper response, final int id) {
         final StringWriter stringWriter = new StringWriter();
@@ -154,7 +152,7 @@ public class RequestLoggerFilter implements Filter {
                 while (values.hasNext()) {
                     printWriter.print(values.next());
                     printWriter.println();
-                    if(values.hasNext()){
+                    if (values.hasNext()) {
                         printWriter.print(' ');
                     }
                 }
@@ -163,7 +161,7 @@ public class RequestLoggerFilter implements Filter {
         printWriter.println("-- Begin response body");
 
         final String body = response.getContentAsInputString();
-        if (body == null || body.length() == 0){
+        if (body == null || body.length() == 0) {
             printWriter.println("-- NO BODY WRITTEN IN RESPONSE");
         } else {
             printWriter.println(body);
@@ -176,8 +174,9 @@ public class RequestLoggerFilter implements Filter {
 
     /**
      * This method handles the dumping of the request body, method, URL and headers if needed
-     * @param request       RequestWrapper used to handle the request by the webapp
-     * @param id            Generated unique identifier for the request/response couple
+     *
+     * @param request RequestWrapper used to handle the request by the webapp
+     * @param id      Generated unique identifier for the request/response couple
      */
     private void dumpRequest(final HttpServletRequestLoggingWrapper request, final int id) {
         final StringWriter stringWriter = new StringWriter();
@@ -207,7 +206,7 @@ public class RequestLoggerFilter implements Filter {
                 while (headerValues.hasMoreElements()) {
                     printWriter.print(headerValues.nextElement());
                     printWriter.println();
-                    if (headerValues.hasMoreElements()){
+                    if (headerValues.hasMoreElements()) {
                         printWriter.print(' ');
                     }
                 }
@@ -215,7 +214,7 @@ public class RequestLoggerFilter implements Filter {
         }
         printWriter.println("-- Begin request body");
         final String body = request.getBody();
-        if (body == null || body.length() == 0){
+        if (body == null || body.length() == 0) {
             printWriter.println("-- NO BODY FOUND IN REQUEST");
         } else {
             printWriter.println(body);

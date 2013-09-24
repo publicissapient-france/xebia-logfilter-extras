@@ -54,8 +54,9 @@ class HttpServletRequestLoggingWrapper extends HttpServletRequestWrapper {
         }
 
 
-        inputStream =  new ServletInputStream() {
-            final ByteArrayInputStream stream =  new ByteArrayInputStream(buffer.toByteArray());
+        inputStream = new ServletInputStream() {
+            final ByteArrayInputStream stream = new ByteArrayInputStream(buffer.toByteArray());
+
             @Override
             public int read() throws IOException {
                 return stream.read();
@@ -65,8 +66,8 @@ class HttpServletRequestLoggingWrapper extends HttpServletRequestWrapper {
 
     String getBody() {
         String body = null;
-        final byte [] bytes = buffer.toByteArray();
-        if(buffer.size() > maxDumpSizeInKB){
+        final byte[] bytes = buffer.toByteArray();
+        if (buffer.size() > maxDumpSizeInKB) {
             body = new StringBuilder(new String(bytes, 0, maxDumpSizeInKB))
                     .append("\n-- ").append(buffer.size() - maxDumpSizeInKB)
                     .append(" more bytes skipped from dump by max dump size limit").toString();
@@ -79,7 +80,7 @@ class HttpServletRequestLoggingWrapper extends HttpServletRequestWrapper {
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
-        if (caughtExceptionOnRead != null){
+        if (caughtExceptionOnRead != null) {
             throw new IOException("Error occured while reading request body", caughtExceptionOnRead);
         }
         return inputStream;

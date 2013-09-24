@@ -45,7 +45,7 @@ public class HttpServletResponseLoggingWrapperTest {
         wrapper.setHeader("TESTBis", "value");
 
         // Verify interception
-        Map<String, List<String>> headers =  wrapper.getHeaders();
+        Map<String, List<String>> headers = wrapper.getHeaders();
         Assert.assertEquals("2 headers have been added", 2, headers.size());
         Assert.assertEquals(1, headers.get("TEST").size());
         Assert.assertEquals("second value", headers.get("TEST").get(0));
@@ -68,7 +68,7 @@ public class HttpServletResponseLoggingWrapperTest {
         wrapper.addHeader("TESTBis", "value");
 
         // Verify interception
-        Map<String, List<String>> headers =  wrapper.getHeaders();
+        Map<String, List<String>> headers = wrapper.getHeaders();
         Assert.assertEquals("2 headers have been added", 2, headers.size());
         Assert.assertEquals(2, headers.get("TEST").size());
         Assert.assertEquals("first value", headers.get("TEST").get(0));
@@ -93,7 +93,7 @@ public class HttpServletResponseLoggingWrapperTest {
     public void getOutputStream_should_return_a_ServletOutputStream_intercepting_content() throws Exception {
         HttpServletResponse originResponse = Mockito.mock(HttpServletResponse.class);
         final ByteArrayOutputStream contentWritten = new ByteArrayOutputStream();
-        ServletOutputStream originStream =  new ServletOutputStream() {
+        ServletOutputStream originStream = new ServletOutputStream() {
             @Override
             public void write(int b) throws IOException {
                 contentWritten.write(b);
@@ -103,10 +103,10 @@ public class HttpServletResponseLoggingWrapperTest {
 
         Mockito.when(originResponse.getOutputStream()).thenReturn(originStream);
 
-        ServletOutputStream stream =  wrapper.getOutputStream();
+        ServletOutputStream stream = wrapper.getOutputStream();
         stream.print(MY_PAYLOAD);
 
-        Assert.assertEquals("Written content and wrapper content should be the same", MY_PAYLOAD,wrapper.getContentAsInputString());
+        Assert.assertEquals("Written content and wrapper content should be the same", MY_PAYLOAD, wrapper.getContentAsInputString());
         Mockito.verify(originResponse).getOutputStream();
         Assert.assertArrayEquals("Written content and origin written content should be the same", MY_PAYLOAD.getBytes(), contentWritten.toByteArray());
     }
@@ -119,7 +119,7 @@ public class HttpServletResponseLoggingWrapperTest {
         Mockito.when(originResponse.getOutputStream()).thenReturn(originStream);
 
         wrapper.getWriter();
-        ServletOutputStream stream =  wrapper.getOutputStream();
+        ServletOutputStream stream = wrapper.getOutputStream();
         Assert.fail("An IllegalStateException should have occured");
     }
 
@@ -130,7 +130,7 @@ public class HttpServletResponseLoggingWrapperTest {
         HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
         Mockito.when(originResponse.getOutputStream()).thenThrow(new IOException("Fail"));
 
-        ServletOutputStream stream =  wrapper.getOutputStream();
+        ServletOutputStream stream = wrapper.getOutputStream();
 
         Assert.fail("An IOException should have occured");
     }
@@ -142,7 +142,7 @@ public class HttpServletResponseLoggingWrapperTest {
         HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
         Mockito.when(originResponse.getOutputStream()).thenReturn(originStream);
 
-        ServletOutputStream stream =  wrapper.getOutputStream();
+        ServletOutputStream stream = wrapper.getOutputStream();
 
         Assert.assertTrue(stream == wrapper.getOutputStream());
     }
@@ -151,7 +151,7 @@ public class HttpServletResponseLoggingWrapperTest {
     public void getWriter_should_return_a_PrintWriter_intercepting_content() throws Exception {
         HttpServletResponse originResponse = Mockito.mock(HttpServletResponse.class);
         final ByteArrayOutputStream contentWritten = new ByteArrayOutputStream();
-        ServletOutputStream originStream =  new ServletOutputStream() {
+        ServletOutputStream originStream = new ServletOutputStream() {
             @Override
             public void write(int b) throws IOException {
                 contentWritten.write(b);
@@ -164,11 +164,11 @@ public class HttpServletResponseLoggingWrapperTest {
         Mockito.when(originResponse.getOutputStream()).thenReturn(originStream);
         Mockito.when(originResponse.getCharacterEncoding()).thenReturn("UTF-8");
 
-        PrintWriter writer =  wrapper.getWriter();
+        PrintWriter writer = wrapper.getWriter();
         writer.print(MY_PAYLOAD);
         writer.flush();
 
-        Assert.assertEquals("Written content and wrapper content should be the same", MY_PAYLOAD,wrapper.getContentAsInputString());
+        Assert.assertEquals("Written content and wrapper content should be the same", MY_PAYLOAD, wrapper.getContentAsInputString());
         Mockito.verify(originResponse).getOutputStream();
         Assert.assertArrayEquals("Written content and origin written content should be the same", MY_PAYLOAD.getBytes(), contentWritten.toByteArray());
 
@@ -182,7 +182,7 @@ public class HttpServletResponseLoggingWrapperTest {
         Mockito.when(originResponse.getWriter()).thenReturn(originWriter);
 
         wrapper.getOutputStream();
-        PrintWriter stream =  wrapper.getWriter();
+        PrintWriter stream = wrapper.getWriter();
         Assert.fail("An IllegalStateException should have occured");
     }
 
@@ -193,7 +193,7 @@ public class HttpServletResponseLoggingWrapperTest {
         HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
         Mockito.when(originResponse.getOutputStream()).thenThrow(new IOException("Fail"));
 
-        PrintWriter writer =  wrapper.getWriter();
+        PrintWriter writer = wrapper.getWriter();
 
         Assert.fail("An IOException should have occured");
     }
@@ -205,7 +205,7 @@ public class HttpServletResponseLoggingWrapperTest {
         HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
         Mockito.when(originResponse.getWriter()).thenReturn(originWriter);
 
-        PrintWriter writer =  wrapper.getWriter();
+        PrintWriter writer = wrapper.getWriter();
 
         Assert.assertTrue(writer == wrapper.getWriter());
     }
@@ -215,7 +215,7 @@ public class HttpServletResponseLoggingWrapperTest {
     public void contentAsInputString_should_return_String_wrote_to_origin_response() throws Exception {
         HttpServletResponse originResponse = Mockito.mock(HttpServletResponse.class);
         final ByteArrayOutputStream contentWritten = new ByteArrayOutputStream();
-        ServletOutputStream originStream =  new ServletOutputStream() {
+        ServletOutputStream originStream = new ServletOutputStream() {
             @Override
             public void write(int b) throws IOException {
                 contentWritten.write(b);
@@ -225,10 +225,10 @@ public class HttpServletResponseLoggingWrapperTest {
 
         Mockito.when(originResponse.getOutputStream()).thenReturn(originStream);
 
-        ServletOutputStream stream =  wrapper.getOutputStream();
+        ServletOutputStream stream = wrapper.getOutputStream();
         stream.print(MY_PAYLOAD);
 
-        Assert.assertEquals("Written content and wrapper content should be the same", MY_PAYLOAD,wrapper.getContentAsInputString());
+        Assert.assertEquals("Written content and wrapper content should be the same", MY_PAYLOAD, wrapper.getContentAsInputString());
         Assert.assertArrayEquals("Written content and origin written content should be the same", MY_PAYLOAD.getBytes(), contentWritten.toByteArray());
     }
 
@@ -236,16 +236,17 @@ public class HttpServletResponseLoggingWrapperTest {
     public void contentAsInputString_should_return_String_wrote_to_origin_response_limited_to_maxDumpSize() throws Exception {
         HttpServletResponse originResponse = Mockito.mock(HttpServletResponse.class);
         final ByteArrayOutputStream contentWritten = new ByteArrayOutputStream();
-        ServletOutputStream originStream =  new ServletOutputStream() {
+        ServletOutputStream originStream = new ServletOutputStream() {
             @Override
             public void write(int b) throws IOException {
                 contentWritten.write(b);
             }
-        };        HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
+        };
+        HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
 
         Mockito.when(originResponse.getOutputStream()).thenReturn(originStream);
 
-        ServletOutputStream stream =  wrapper.getOutputStream();
+        ServletOutputStream stream = wrapper.getOutputStream();
         stream.print(HUGE_PAYLOAD);
 
         Assert.assertTrue("Body String should be limited", wrapper.getContentAsInputString().contains("-- 1880 more bytes skipped from dump by max dump size limit"));
@@ -253,14 +254,12 @@ public class HttpServletResponseLoggingWrapperTest {
     }
 
 
-
-
     @Test
     public void contentAsBytes_should_return_String_wrote_to_origin_response_in_bytes_with_no_limit() throws Exception {
         HttpServletResponse originResponse = Mockito.mock(HttpServletResponse.class);
         HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
         final ByteArrayOutputStream contentWritten = new ByteArrayOutputStream();
-        ServletOutputStream originStream =  new ServletOutputStream() {
+        ServletOutputStream originStream = new ServletOutputStream() {
             @Override
             public void write(int b) throws IOException {
                 contentWritten.write(b);
@@ -268,7 +267,7 @@ public class HttpServletResponseLoggingWrapperTest {
         };
         Mockito.when(originResponse.getOutputStream()).thenReturn(originStream);
 
-        ServletOutputStream stream =  wrapper.getOutputStream();
+        ServletOutputStream stream = wrapper.getOutputStream();
         stream.print(HUGE_PAYLOAD);
 
         Assert.assertArrayEquals("Written content and wrapper content should be the same", HUGE_PAYLOAD.getBytes(), wrapper.getContentAsBytes());
@@ -307,7 +306,7 @@ public class HttpServletResponseLoggingWrapperTest {
 
         Mockito.verify(originResponse).sendRedirect("Location");
         Assert.assertEquals("302 Redirect", wrapper.getStatusCode());
-        Map<String, List<String>> headers =  wrapper.getHeaders();
+        Map<String, List<String>> headers = wrapper.getHeaders();
         Assert.assertEquals("Location", headers.get("Location").get(0));
     }
 
@@ -336,7 +335,7 @@ public class HttpServletResponseLoggingWrapperTest {
 
 
     @Test
-    public void getContentAsInputString_should_return_default_string_when_no_body(){
+    public void getContentAsInputString_should_return_default_string_when_no_body() {
         HttpServletResponse originResponse = Mockito.mock(HttpServletResponse.class);
         HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
 
@@ -345,7 +344,7 @@ public class HttpServletResponseLoggingWrapperTest {
     }
 
     @Test
-    public void getContentAsInputString_should_return_empty_string_when_no_data_written()throws Exception{
+    public void getContentAsInputString_should_return_empty_string_when_no_data_written() throws Exception {
         HttpServletResponse originResponse = Mockito.mock(HttpServletResponse.class);
         ServletOutputStream stream = Mockito.mock(ServletOutputStream.class);
         HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
@@ -355,7 +354,6 @@ public class HttpServletResponseLoggingWrapperTest {
         String body = wrapper.getContentAsInputString();
         Assert.assertEquals("", body);
     }
-
 
 
     static final String HUGE_PAYLOAD = "################################################################################" +
@@ -394,7 +392,6 @@ public class HttpServletResponseLoggingWrapperTest {
             "################################################################################" +
             "################################################################################" +
             "################################################################################";
-
 
 
 }

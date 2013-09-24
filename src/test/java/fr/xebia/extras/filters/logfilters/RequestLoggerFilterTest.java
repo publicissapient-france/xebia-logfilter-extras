@@ -43,7 +43,6 @@ public class RequestLoggerFilterTest {
     }
 
 
-
     @Test
     public void maxDumpSizeInKB_should_be_defaulted_when_init_config_is_not_an_integer() throws Exception {
         FilterConfig config = Mockito.mock(FilterConfig.class);
