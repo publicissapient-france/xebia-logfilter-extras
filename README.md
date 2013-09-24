@@ -25,8 +25,12 @@ If level is higher than DEBUG, the filter will simply call the filter chain with
 Dumping can be enabled separately for request and response. To provide easy coupling between request and response
 the filter will generate an Integer base ID when processing.
 
-It is possible to limit the size of the dump using th maxDumpSizeInKB init parameter. This parameter
-defines the max size of the dump in KB, beware that it defaults to 500KB.
+It is possible to limit the size of the dump using the maxDumpSizeInKB init parameter. This parameter
+defines the max size of the dump in Kilo Bytes, beware that it defaults to 500KB.
+
+This project depends only on SLF4J API, and servlet 2.5 API considered as provided. It is built using
+Java 1.7 using code style 1.7 at compile time. If you need older code style or any other feature ask for
+it using the issue tracker.
 
 # Using the RequestLoggerFilter
 
@@ -77,11 +81,21 @@ RequestLoggerFilter is a ServletFilter that Dump full request and response to an
 
 This project is available via maven central repository
 
+### For release version:
 ```
 <dependency>
   <groupId>fr.xebia.extras</groupId>
   <artifactId>xebia-logfilter-extras</artifactId>
   <version>1.0.0</version>
+</dependency>
+```
+
+### For SNAPSHOT version:
+```
+<dependency>
+  <groupId>fr.xebia.extras</groupId>
+  <artifactId>xebia-logfilter-extras</artifactId>
+  <version>1.0.1-SNAPSHOT</version>
 </dependency>
 ```
 

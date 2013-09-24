@@ -5,6 +5,7 @@
 * Fix setHeader method on response to overwrite associated value
 * Improve headers dump format
 * Improve empty body format in dump
+* Upgrade slf4j API to 1.7.5
 
 1.0.0 - 9/23/2013 :
 
