@@ -126,7 +126,6 @@ public class RequestLoggerFilter implements Filter {
             response = new HttpServletResponseLoggingWrapper((HttpServletResponse) servletResponse, maxDumpSizeInKB);
             filterChain.doFilter(request, response);
             dumpResponse((HttpServletResponseLoggingWrapper) response, id);
-            servletResponse.getOutputStream().write(((HttpServletResponseLoggingWrapper) response).getContentAsBytes());
         } else {
             // Dumping of the response is not needed so we just handle the chain
             filterChain.doFilter(request, response);
