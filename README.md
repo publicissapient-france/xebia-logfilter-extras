@@ -42,6 +42,9 @@ RequestLoggerFilter is a ServletFilter that Dump full request and response to an
 
 ## Mapping sample
 
+Here is an extract from a war web.xml, configuring the RequestLoggerFilter to be able to dump every
+request and response on /rest/* URL pattern.
+
 ```
   <filter>
     <filter-name>requestLoggerFilter</filter-name>
@@ -62,8 +65,15 @@ RequestLoggerFilter is a ServletFilter that Dump full request and response to an
 
 ## logback configuration
 
+In this sample we use logback, but since we use slf4j, you can use any implementation of the API
+to configure it. The main things to notice are the loggers names. Please also notice that headers
+logger is only used to enable the dumping of the headers, no logs are appended to it.
+
  ```
- <!--Dumping HTTP Requests and response using the RequestLoggerFilter -->
+<!--
+ Dumping HTTP requests and response with their headers to the console appender
+  using the RequestLoggerFilter
+-->
     <logger name="RequestLoggerFilter.request" level="debug" additivity="false">
         <appender-ref ref="console"/>
     </logger>
