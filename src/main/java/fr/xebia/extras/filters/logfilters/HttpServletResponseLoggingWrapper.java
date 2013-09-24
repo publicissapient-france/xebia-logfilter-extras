@@ -126,14 +126,16 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
     }
 
     public String getContentAsInputString() {
-        final byte [] bytes = cache.toByteArray();
         String body = null;
-        if(bytes.length > maxDumpSizeInB){
-            body = new StringBuilder(new String(bytes, 0, maxDumpSizeInB))
-                    .append("\n-- ").append(bytes.length - maxDumpSizeInB)
-                    .append(" more bytes skipped from dump by max dump size limit").toString();
-        } else {
-            body = new String(bytes, 0, bytes.length);
+        if (cache != null ){
+            final byte [] bytes = cache.toByteArray();
+            if(bytes.length > maxDumpSizeInB){
+                body = new StringBuilder(new String(bytes, 0, maxDumpSizeInB))
+                        .append("\n-- ").append(bytes.length - maxDumpSizeInB)
+                        .append(" more bytes skipped from dump by max dump size limit").toString();
+            } else {
+                body = new String(bytes, 0, bytes.length);
+            }
         }
         return body;
     }
