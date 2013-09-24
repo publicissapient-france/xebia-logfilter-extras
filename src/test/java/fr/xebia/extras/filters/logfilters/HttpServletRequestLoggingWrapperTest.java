@@ -39,6 +39,15 @@ public class HttpServletRequestLoggingWrapperTest {
         Assert.assertEquals("Body of the Request and result body should match", SMALL_PAYLOAD, wrapper.getBody());
     }
 
+    @Test
+    public void should_read_empty_body_and_return_it() throws Exception {
+
+        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        Mockito.when(request.getInputStream()).thenReturn(getStreamForString(null));
+        HttpServletRequestLoggingWrapper wrapper = new HttpServletRequestLoggingWrapper(request, 12);
+        Assert.assertEquals("Body of the Request and result body should match", "", wrapper.getBody());
+    }
+
 
     @Test
     public void should_give_a_stream_containing_the_body() throws Exception {
@@ -76,7 +85,7 @@ public class HttpServletRequestLoggingWrapperTest {
     }
 
     ServletInputStream getStreamForString(String payloadString){
-        final ByteArrayInputStream payload = new ByteArrayInputStream(payloadString.getBytes());
+        final ByteArrayInputStream payload = new ByteArrayInputStream(payloadString != null ? payloadString.getBytes(): new byte[0]);
 
         return new ServletInputStream() {
             @Override

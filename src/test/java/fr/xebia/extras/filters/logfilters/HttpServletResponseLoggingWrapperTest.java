@@ -47,8 +47,9 @@ public class HttpServletResponseLoggingWrapperTest {
         // Verify interception
         Map<String, List<String>> headers =  wrapper.getHeaders();
         Assert.assertEquals("2 headers have been added", 2, headers.size());
-        Assert.assertEquals("first value", headers.get("TEST").get(0));
-        Assert.assertEquals("second value", headers.get("TEST").get(1));
+        Assert.assertEquals(1, headers.get("TEST").size());
+        Assert.assertEquals("second value", headers.get("TEST").get(0));
+        Assert.assertEquals(1, headers.get("TESTBis").size());
         Assert.assertEquals("value", headers.get("TESTBis").get(0));
 
         // Verify real call to original response object
@@ -63,12 +64,16 @@ public class HttpServletResponseLoggingWrapperTest {
         HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(response, 1);
 
         wrapper.addHeader("TEST", "first value");
+        wrapper.addHeader("TEST", "second value");
         wrapper.addHeader("TESTBis", "value");
 
         // Verify interception
         Map<String, List<String>> headers =  wrapper.getHeaders();
         Assert.assertEquals("2 headers have been added", 2, headers.size());
+        Assert.assertEquals(2, headers.get("TEST").size());
         Assert.assertEquals("first value", headers.get("TEST").get(0));
+        Assert.assertEquals("second value", headers.get("TEST").get(1));
+        Assert.assertEquals(1, headers.get("TESTBis").size());
         Assert.assertEquals("value", headers.get("TESTBis").get(0));
 
         // Verify real call to original response object
@@ -328,6 +333,29 @@ public class HttpServletResponseLoggingWrapperTest {
         Mockito.verify(originResponse).setStatus(200, "OK");
         Assert.assertEquals("200 OK", wrapper.getStatusCode());
     }
+
+
+    @Test
+    public void getContentAsInputString_should_return_default_string_when_no_body(){
+        HttpServletResponse originResponse = Mockito.mock(HttpServletResponse.class);
+        HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
+
+        String body = wrapper.getContentAsInputString();
+        Assert.assertEquals("", body);
+    }
+
+    @Test
+    public void getContentAsInputString_should_return_empty_string_when_no_data_written()throws Exception{
+        HttpServletResponse originResponse = Mockito.mock(HttpServletResponse.class);
+        ServletOutputStream stream = Mockito.mock(ServletOutputStream.class);
+        HttpServletResponseLoggingWrapper wrapper = new HttpServletResponseLoggingWrapper(originResponse, 1);
+
+        Mockito.when(originResponse.getOutputStream()).thenReturn(stream);
+        wrapper.getOutputStream();
+        String body = wrapper.getContentAsInputString();
+        Assert.assertEquals("", body);
+    }
+
 
 
     static final String HUGE_PAYLOAD = "################################################################################" +

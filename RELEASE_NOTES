@@ -1,0 +1,13 @@
+1.0.1 - 9/24/2013 :
+
+* Fix NPE when body is empty or null on the response stream
+* Fix duplicate response body
+* Fix setHeader method on response to overwrite associated value
+* Improve headers dump format
+* Improve empty body format in dump
+
+1.0.0 - 9/23/2013 :
+
+First public release with fully working filter to dump request and/or response
+handled by a servlet engine.
+

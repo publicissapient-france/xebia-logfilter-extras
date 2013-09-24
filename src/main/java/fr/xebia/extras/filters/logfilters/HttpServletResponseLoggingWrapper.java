@@ -57,6 +57,7 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
     @Override
     public void setHeader(final String name, final String value) {
         List<String> values = getHeaderValues(name);
+        values.clear(); // setHeader overwrite previous value
         values.add(value);
         super.setHeader(name, value);
     }
@@ -87,8 +88,7 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
     public void flushBuffer() throws IOException {
         if (writer != null){
             writer.flush();
-        }
-        if (cache != null){
+        } else if (cache != null){
             cache.flush();
         }
         super.flushBuffer();
@@ -136,6 +136,8 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
             } else {
                 body = new String(bytes, 0, bytes.length);
             }
+        } else {
+            body = "";
         }
         return body;
     }

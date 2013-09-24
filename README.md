@@ -73,9 +73,9 @@ RequestLoggerFilter is a ServletFilter that Dump full request and response to an
     </logger>
 ```
 
-## Maven depedency
+## Maven dependency
 
-This project is available via maven repository
+This project is available via maven central repository
 
 ```
 <dependency>

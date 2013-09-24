@@ -17,6 +17,7 @@ package fr.xebia.extras.filters.logfilters;
 
 import java.io.*;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -141,23 +142,34 @@ public class RequestLoggerFilter implements Filter {
     private void dumpResponse(final HttpServletResponseLoggingWrapper response, final int id) {
         final StringWriter stringWriter = new StringWriter();
         final PrintWriter printWriter = new PrintWriter(stringWriter);
-        printWriter.print("-- Response ID: ");
+        printWriter.print("-- ID: ");
         printWriter.println(id);
         printWriter.println(response.getStatusCode());
         if (LOG_HEADERS.isDebugEnabled()) {
             final Map<String, List<String>> headers = response.headers;
             for (Map.Entry<String, List<String>> header : headers.entrySet()) {
-                for (String value : header.getValue()) {
-                    printWriter.print(header.getKey());
-                    printWriter.print(": ");
-                    printWriter.print(value);
+                printWriter.print(header.getKey());
+                printWriter.print(": ");
+                Iterator<String> values = header.getValue().iterator();
+                while (values.hasNext()) {
+                    printWriter.print(values.next());
+                    printWriter.println();
+                    if(values.hasNext()){
+                        printWriter.print(' ');
+                    }
                 }
-                printWriter.println();
             }
         }
-        printWriter.println("--begin response body");
-        printWriter.println(response.getContentAsInputString());
-        printWriter.println("--end response body");
+        printWriter.println("-- Begin response body");
+
+        final String body = response.getContentAsInputString();
+        if (body == null || body.length() == 0){
+            printWriter.println("-- NO BODY WRITTEN IN RESPONSE");
+        } else {
+            printWriter.println(body);
+        }
+        printWriter.println();
+        printWriter.println("-- End response body");
         printWriter.flush();
         LOG_RESPONSE.debug(stringWriter.toString());
     }
@@ -176,7 +188,7 @@ public class RequestLoggerFilter implements Filter {
             printWriter.print("Authenticated as ");
             printWriter.println(request.getRemoteUser());
         }
-        printWriter.print("-- Request ID:");
+        printWriter.print("-- ID: ");
         printWriter.println(id);
         printWriter.print(request.getMethod());
         printWriter.print(" ");
@@ -190,17 +202,25 @@ public class RequestLoggerFilter implements Filter {
                 final String key = headerNames.nextElement();
                 @SuppressWarnings("unchecked")
                 final Enumeration<String> headerValues = request.getHeaders(key);
+                printWriter.print(key);
+                printWriter.print(": ");
                 while (headerValues.hasMoreElements()) {
-                    printWriter.print(key);
-                    printWriter.print(": ");
                     printWriter.print(headerValues.nextElement());
+                    printWriter.println();
+                    if (headerValues.hasMoreElements()){
+                        printWriter.print(' ');
+                    }
                 }
-                printWriter.println();
             }
         }
-        printWriter.println("--begin request body");
-        printWriter.println(request.getBody());
-        printWriter.println("--end request body");
+        printWriter.println("-- Begin request body");
+        final String body = request.getBody();
+        if (body == null || body.length() == 0){
+            printWriter.println("-- NO BODY FOUND IN REQUEST");
+        } else {
+            printWriter.println(body);
+        }
+        printWriter.println("-- End request body");
         printWriter.flush();
         LOG_REQUEST.debug(stringWriter.toString());
     }
