@@ -96,7 +96,7 @@ This project is available via maven central repository
 <dependency>
   <groupId>fr.xebia.extras</groupId>
   <artifactId>xebia-logfilter-extras</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
@@ -105,7 +105,7 @@ This project is available via maven central repository
 <dependency>
   <groupId>fr.xebia.extras</groupId>
   <artifactId>xebia-logfilter-extras</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
 </dependency>
 ```
 
