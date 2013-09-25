@@ -27,7 +27,7 @@
     <artifactId>xebia-logfilter-extras</artifactId>
     <packaging>jar</packaging>
     <description>Filter to dump request and response for Servlet API</description>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <scm>
         <connection>scm:git:git@github.com:xebia-france/xebia-logfilter-extras.git</connection>
         <developerConnection>scm:git:git@github.com:xebia-france/xebia-logfilter-extras.git</developerConnection>
