@@ -40,7 +40,7 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
     private final int maxDumpSizeInB;
     protected PrintWriter writer = null;
     protected CacheResponseStream cache = null;
-    protected Map<String, List<String>> headers = new HashMap<>();
+    protected Map<String, List<String>> headers = new HashMap<String, List<String>>();
     private final HttpServletResponse response;
     String status = "200 OK";
 
@@ -72,7 +72,7 @@ class HttpServletResponseLoggingWrapper extends HttpServletResponseWrapper {
     private List<String> getHeaderValues(String name) {
         List<String> values = headers.get(name);
         if (values == null) {
-            values = new ArrayList<>();
+            values = new ArrayList<String>();
             headers.put(name, values);
         }
         return values;

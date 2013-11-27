@@ -43,7 +43,9 @@ class HttpServletRequestLoggingWrapper extends HttpServletRequestWrapper {
 
         maxDumpSizeInKB = _maxDumpSizeInKB * 1000;
         buffer = new ByteArrayOutputStream(RequestLoggerFilter.BUFFER_SIZE);
-        try (InputStream stream = super.getInputStream()) {
+        InputStream stream = null;
+        try {
+            stream = super.getInputStream();
             int n;
             while ((n = stream.read()) != -1) {
                 buffer.write(n);
@@ -51,6 +53,14 @@ class HttpServletRequestLoggingWrapper extends HttpServletRequestWrapper {
         } catch (final IOException e) {
             logger.error("IO caught while dumping request", e);
             caughtExceptionOnRead = e;
+        } finally {
+            if(stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    logger.error("IO caught while closing input stream request", e);
+                }
+            }
         }
 
 
